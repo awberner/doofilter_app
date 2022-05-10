@@ -5,6 +5,8 @@ import {theme} from "../../core/theme";
 import Modal from "react-native-modalbox";
 import * as Animatable from 'react-native-animatable';
 const { width, height } = Dimensions.get("window");
+import { addImage } from '../functions/functions';
+import { useNavigation } from '@react-navigation/native';
 import { EvilIcons, MaterialIcons, Feather } from 'react-native-vector-icons';
 import {useTranslation} from "react-i18next";
 import {
@@ -26,6 +28,7 @@ export default function BottomModal({isOpenModal, setModalVisible}) {
     });
 
     const { t } = useTranslation();
+    const navigation = useNavigation();
 
     return (
         <Modal entry={"bottom"} isOpen={isOpenModal} style={styles.modalBox} onClosed={() => setModalVisible(false)}>
@@ -36,12 +39,12 @@ export default function BottomModal({isOpenModal, setModalVisible}) {
 
 
                 <View style={styles.modalHeader}>
-                    <Text style={styles.modalHeaderText}>{t("CREATE")}</Text>
+                    <Text style={styles.modalHeaderText}>{t("DOOFILTER")}</Text>
                 </View>
 
                 <View style={styles.content}>
 
-                    <Animatable.View style={styles.menuItem} animation="fadeIn" delay={100}>
+                    {/*<Animatable.View style={styles.menuItem} animation="fadeIn" delay={100}>
                         <TouchableOpacity style={styles.buttonContainer}>
                             <LinearGradient colors={['#0093d6', '#0070a3']} style={styles.IconContainer}>
                                 <Feather style={styles.buttonIcon} name="image" size={20} color={theme.colors.white}/>
@@ -51,15 +54,15 @@ export default function BottomModal({isOpenModal, setModalVisible}) {
                                 <Text style={styles.cardSubText}>Publier sur le mur Doofilter</Text>
                             </View>
                         </TouchableOpacity>
-                    </Animatable.View>
+                    </Animatable.View>*/}
 
                     <Animatable.View style={styles.menuItem} animation="fadeIn" delay={200}>
-                        <TouchableOpacity style={styles.buttonContainer}>
-                            <LinearGradient colors={['#0093d6', '#0070a3']} style={styles.IconContainer}>
-                                <Feather style={styles.buttonIcon} name="camera" size={20} color={theme.colors.white}/>
-                            </LinearGradient>
+                        <TouchableOpacity style={styles.buttonContainer} onPress={() => addImage(navigation)} >
+                            <View style={styles.IconContainer}>
+                                <Feather style={styles.buttonIcon} name="camera" size={30} color={theme.colors.primary}/>
+                            </View>
                             <View>
-                                <Text style={styles.cardText}>Doofilter Photo</Text>
+                                <Text style={styles.cardText}>Photo</Text>
                                 <Text style={styles.cardSubText}>Restore your underwater pictures</Text>
                             </View>
                         </TouchableOpacity>
@@ -67,12 +70,12 @@ export default function BottomModal({isOpenModal, setModalVisible}) {
 
                     <Animatable.View style={styles.menuItem} animation="fadeIn" delay={300}>
                         <TouchableOpacity style={styles.buttonContainer}>
-                            <LinearGradient colors={['#0093d6', '#0070a3']} style={styles.IconContainer}>
-                                <Feather style={styles.buttonIcon} name="video" size={19} color={theme.colors.white}/>
-                            </LinearGradient>
+                            <View style={styles.IconContainer}>
+                                <Feather style={styles.buttonIcon} name="video" size={30} color={theme.colors.primary}/>
+                            </View>
                             <View>
-                                <Text style={styles.cardText}>Doofilter Vidéo SOON</Text>
-                                <Text style={styles.cardSubText}>Restore your underwater pictures</Text>
+                                <Text style={styles.cardText}>Vidéo SOON</Text>
+                                <Text style={styles.cardSubText}>Restore your underwater vidéos</Text>
                             </View>
                         </TouchableOpacity>
                     </Animatable.View>
@@ -91,7 +94,7 @@ const styles = StyleSheet.create({
     },
     modalHeader: {
         width: '100%',
-        paddingVertical: 22,
+        paddingVertical: 20,
         color: theme.colors.white,
         borderBottomWidth: 1,
         borderBottomColor: theme.colors.lightgray,
@@ -99,11 +102,11 @@ const styles = StyleSheet.create({
     modalHeaderText: {
         fontWeight: "bold",
         textAlign: "center",
-        fontSize: 16,
+        fontSize: 18,
         width: '100%',
         letterSpacing: 0.2,
         color: theme.colors.primary,
-        fontFamily: 'Poppins_600SemiBold'
+        fontFamily: 'Poppins_700Bold'
     },
     modalContent: {
         position: "absolute",
@@ -139,52 +142,34 @@ const styles = StyleSheet.create({
         borderBottomColor: theme.colors.lightgray,
     },
     cardText: {
-        fontSize: 14,
-        fontFamily: 'Poppins_500Medium',
+        fontSize: 16,
+        fontFamily: 'Poppins_600SemiBold',
         color: theme.colors.black,
     },
     cardSubText: {
-        fontSize: 13,
+        fontSize: 14,
         fontFamily: 'Poppins_400Regular',
         color: theme.colors.black,
     },
     buttonContainer: {
         width: width,
-        paddingVertical: 6,
-        paddingHorizontal: 10,
+        paddingVertical: 15,
+        paddingHorizontal: 15,
         position: "relative",
         flexDirection: "row",
         flexWrap: "wrap",
-        alignItems: "center"
+        alignItems: "center",
     },
     IconContainer: {
         width: 40,
         height: 40,
-        borderRadius: 40 / 2,
+        borderRadius: 8,
         marginVertical: 3,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 2,
-            height: 4,
-        },
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65,
-        elevation: 6,
-        borderWidth: 3,
-        borderColor: theme.colors.white,
         alignItems: "center",
         justifyContent: "center",
-        marginRight: 6
+        marginRight: 14
     },
     buttonIcon: {
-        marginVertical: 3,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 2,
-            height: 4,
-        },
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65,
         elevation: 6,
     },
 });

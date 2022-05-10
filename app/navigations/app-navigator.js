@@ -8,6 +8,8 @@ import FriendsScreen from "../screens/FriendsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import UserProfileScreen from "../screens/UserProfileScreen";
 import UserFeedScreen from "../screens/UserFeedScreen";
+import EditImageScreen from "../screens/EditImageScreen";
+import SocialScreen from "../screens/SocialScreen";
 
 const Stack = createSharedElementStackNavigator();
 
@@ -25,6 +27,8 @@ export default function AppNavigator() {
             <Stack.Screen name="ProfileScreen" component={ProfileScreen} initialParams={{user: '6722738943958'}} />
             <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
             <Stack.Screen name="UserFeedScreen" component={UserFeedScreen}/>
+            <Stack.Screen name="EditImageScreen" component={EditImageScreen} initialParam={{image: []}}/>
+            <Stack.Screen name="SocialScreen" component={SocialScreen}/>
         </Stack.Navigator>
     )
 

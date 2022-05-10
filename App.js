@@ -10,6 +10,8 @@ import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import AuthNavigator from "./app/navigations/auth-navigator";
 import AppNavigator from "./app/navigations/app-navigator";
 import {signIn} from "./app/services/Members";
+import store from "./app/redux/store";
+import {addCurrentUser} from "./app/redux/actions";
 
 Navigation.registerComponent('StartScreen', () => gestureHandlerRootHOC(App));
 
@@ -22,7 +24,6 @@ export default function App() {
                     return {
                         ...prevState,
                         user: action.user,
-                        avatar: action.avatar,
                         userToken: action.token,
                         isLoading: false,
                     };
@@ -31,7 +32,6 @@ export default function App() {
                         ...prevState,
                         isSignout: false,
                         user: action.user,
-                        avatar: action.avatar,
                         userToken: action.token,
                     };
                 case 'SIGN_OUT':
@@ -39,7 +39,6 @@ export default function App() {
                         ...prevState,
                         isSignout: true,
                         user: null,
-                        avatar: null,
                         userToken: null,
                     };
             }
@@ -48,7 +47,6 @@ export default function App() {
             isLoading: true,
             isSignout: false,
             user: null,
-            avatar: null,
             userToken: null,
         }
     );
@@ -57,22 +55,25 @@ export default function App() {
         // Fetch the token from storage then navigate to our appropriate place
         const bootstrapAsync = async () => {
             let user;
-            let avatar;
             let userToken;
 
             try {
                 user = await SecureStore.getItemAsync('user');
-                avatar = await SecureStore.getItemAsync('avatar');
                 userToken = await SecureStore.getItemAsync('userToken');
             } catch (e) {
                 dispatch({ type: 'SIGN_OUT'});
             }
 
+            
             // After restoring token, we may need to validate it in production apps
 
             // This will switch to the App screen or Auth screen and this loading
             // screen will be unmounted and thrown away.
-            dispatch({type: 'RESTORE_TOKEN',  user: user, avatar: avatar, token: userToken });
+            dispatch({
+                type: 'RESTORE_TOKEN',
+                user: user,
+                token: userToken
+            });
         };
 
         bootstrapAsync();
@@ -88,17 +89,23 @@ export default function App() {
                 // In the example, we'll use a dummy token
 
                 signIn(email, password).then(async (data) => {
-                    await SecureStore.setItemAsync('user', data.user);
-                    await SecureStore.setItemAsync('avatar', data.avatar);
-                    await SecureStore.setItemAsync('userToken', data.userToken);
-                    dispatch({type: 'SIGN_IN', user: data.user, avatar: data.avatar, token: data.token});
+                    if(data) {
+                        await SecureStore.setItemAsync('user', data.uid);
+                        await SecureStore.setItemAsync('userToken', data.token);
+                        store.dispatch(addCurrentUser(data));
+                        dispatch({
+                            type: 'SIGN_IN',
+                            user: data.uid,
+                            token: data.token
+                        });
+                        //console.log(store.getState().currentUser.avatar);
+                    }
                 });
 
             },
 
             signOut: async () => {
                 await SecureStore.deleteItemAsync('user');
-                await SecureStore.deleteItemAsync('avatar');
                 await SecureStore.deleteItemAsync('userToken');
                 dispatch({type: 'SIGN_OUT'})
             },

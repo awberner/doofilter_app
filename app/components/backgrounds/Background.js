@@ -1,6 +1,8 @@
 import React from 'react'
 import { ImageBackground, StyleSheet, View, KeyboardAvoidingView } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
+import {StatusBar} from "expo-status-bar";
+
 
 export default function Background({ children , ...props}) {
 
@@ -23,7 +25,16 @@ export default function Background({ children , ...props}) {
                 </LinearGradient>
             )
             break;
-
+        case 'black':
+            return (
+                <View
+                    style={{...styles.background, backgroundColor: '#000'}}>
+                    <KeyboardAvoidingView style={styles.container} behavior="padding">
+                        {children}
+                    </KeyboardAvoidingView>
+                </View>
+            )
+            break;
         case 'color':
             return (
                 <LinearGradient
@@ -43,6 +54,25 @@ export default function Background({ children , ...props}) {
                     <KeyboardAvoidingView style={styles.container} behavior="padding">
                         {children}
                     </KeyboardAvoidingView>
+                </LinearGradient>
+            )
+            break;
+        case 'home':
+            return (
+                <LinearGradient
+                    colors={['#0093d6', '#1F4264']}
+                    style={styles.background}>
+                    <StatusBar style="light" />
+                    <ImageBackground
+                        source={require('../../assets/images/backgroundFeed.jpeg')}
+                        resizeMode="cover"
+                        style={styles.background}
+                    >
+                        <View style={styles.overlay}/>
+                        <KeyboardAvoidingView style={styles.container} behavior="padding">
+                            {children}
+                        </KeyboardAvoidingView>
+                    </ImageBackground>
                 </LinearGradient>
             )
             break;

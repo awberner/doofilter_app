@@ -1,16 +1,21 @@
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
-import {API_TOKEN} from '@env';
+import {API_URL, API_TOKEN} from '@env';
 
 
 export const signIn = (email, password) => new Promise(async (resolve) => {
-    const member = {
-        avatar: 'https://media.doodive.com/media/67227389439586200dc50d4bcf',
-        user: '61b1b12178cfb',
-        userToken: '61b1b12178cfb',
-        token: '61b1b12178cfb'
-    }
-    resolve(member);
+
+    const req = {
+        email: email,
+        pwd: password,
+        action : 'signin',
+        token : API_TOKEN
+    };
+
+    axios.post(API_URL + 'doofilter_app', req)
+        .then( res => {
+            resolve(res.data.response);
+        });
 });
 
 export const getUser = (user) => new Promise(async (resolve) => {

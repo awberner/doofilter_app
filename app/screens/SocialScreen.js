@@ -1,22 +1,22 @@
 import React from "react";
 import BackgroundBlurred from "../components/backgrounds/BackgroundBlurred";
 import Background from "../components/backgrounds/Background";
-import AppBarFeed from "../components/appBars/AppBarFeed";
+import AppBar from "../components/appBars/AppBar";
 import TabBar from "../components/tabBar/TabBar";
 import FeedList from "../components/feed/FeedList";
-import Home from "../components/home/Home";
+import Social from "../components/social/Social";
 
 
 export default function HomeScreen () {
 
     return (
-        <Background page={'home'}>
+        <Background>
 
-            <AppBarFeed />
+            <AppBar />
 
-            <Home />
+            <Social />
 
-            <TabBar page={'home'} />
+            <TabBar page={'social'} />
 
         </Background>
     );

@@ -7,7 +7,7 @@ import AppBarBackButton from "./BackButton";
 const width = Dimensions.get('window').width;
 
 
-const AppBarFeed = ({goBack}) => {
+const AppBarEdit = ({goBack}) => {
 
     return (
         <LinearGradient
@@ -15,21 +15,21 @@ const AppBarFeed = ({goBack}) => {
             style={styles.appbar}>
             <SafeAreaView style={[styles.container,GlobalStyles.droidSafeArea]}>
                 { goBack ? <AppBarBackButton/> : false }
-                <AppBarLogo />
+                {/*<AppBarLogo />*/}
             </SafeAreaView>
         </LinearGradient>
     )
 
 }
 
-export default AppBarFeed;
+export default AppBarEdit;
 
 
 const styles = StyleSheet.create({
     appbar: {
         /*position: "absolute",*/
         width: width,
-        height: 119,
+        height: 100,
         zIndex: 5
     },
     container: {

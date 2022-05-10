@@ -12,7 +12,7 @@ import * as SecureStore from "expo-secure-store";
 import {MEDIA_SERVER_DOODIVE_DEFAULT} from '@env';
 
 
-const TabBar = ({...props}) => {
+const TabBarEdit = ({...props}) => {
 
     let [fontsLoaded] = useFonts({
         Poppins_400Regular,
@@ -82,7 +82,7 @@ const TabBar = ({...props}) => {
 
                     <TouchableOpacity style={styles.element} onPress={() => navigation.navigate('SocialScreen')}>
                         <Fontisto style={props.page === 'social' ? styles.active : false} name="world" size={25}
-                                         color={theme.colors.primary}/>
+                                  color={theme.colors.primary}/>
                         <Text style={{marginTop: 7, ...styles.textStyle}}>{t("DOODIVE")}</Text>
                     </TouchableOpacity>
 
@@ -96,7 +96,7 @@ const TabBar = ({...props}) => {
     }
 }
 
-export default TabBar;
+export default TabBarEdit;
 
 
 const styles = StyleSheet.create({
