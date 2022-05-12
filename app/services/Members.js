@@ -3,8 +3,11 @@ import axios from "axios";
 import {API_URL, API_TOKEN} from '@env';
 
 
-export const signIn = (email, password) => new Promise(async (resolve) => {
 
+/* ================================================================== */
+/* LOGIN                                                              */
+/* ================================================================== */
+export const signIn = (email, password) => new Promise(async (resolve) => {
     const req = {
         email: email,
         pwd: password,
@@ -13,11 +16,56 @@ export const signIn = (email, password) => new Promise(async (resolve) => {
     };
 
     axios.post(API_URL + 'doofilter_app', req)
-        .then( res => {
-            resolve(res.data.response);
+        .then( async res => {
+            if(res && res.data && res.data.response) {
+                let data = res.data.response;
+                await SecureStore.setItemAsync('user', data.uid);
+                await SecureStore.setItemAsync('userToken', data.token);
+                await SecureStore.setItemAsync('userInfo', JSON.stringify(data));
+                resolve(res.data.response);
+            } else {
+                resolve({'error': true})
+            }
+        })
+        .catch(function (error) {
+            resolve({'error': true})
         });
 });
 
+
+/* ================================================================== */
+/* REFRESH USER INFO                                                  */
+/* ================================================================== */
+export const refreshCurrentUser = (uid, token) => new Promise(async (resolve) => {
+    const req = {
+        uid: uid,
+        userToken: token,
+        action : 'refreshUser',
+        token : API_TOKEN
+    };
+
+    axios.post(API_URL + 'doofilter_app', req)
+        .then( async res => {
+            if(res && res.data && res.data.response) {
+                let data = res.data.response;
+                await SecureStore.setItemAsync('user', data.uid);
+                await SecureStore.setItemAsync('userToken', data.token);
+                await SecureStore.setItemAsync('userInfo', JSON.stringify(data));
+                resolve(res.data.response);
+            } else {
+                resolve({'error': true})
+            }
+        })
+        .catch(function (error) {
+            resolve({'error': true})
+        });
+});
+
+
+
+/* ================================================================== */
+/* GET CURRENT USER                                                   */
+/* ================================================================== */
 export const getUser = (user) => new Promise(async (resolve) => {
     const data = {
         'av': '67227389439586200dc50d4bcf',

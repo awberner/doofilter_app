@@ -2,8 +2,8 @@ import React from 'react';
 import {StyleSheet, TouchableHighlight, View, Text} from 'react-native';
 import {theme} from "../../core/theme";
 import {Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, useFonts} from "@expo-google-fonts/poppins";
-import AppLoading from "expo-app-loading";
 import {useTranslation} from "react-i18next";
+import AnimatedSplash from "react-native-animated-splash-screen";
 
 
 const TabBarEdit = ({...props}) => {
@@ -19,7 +19,7 @@ const TabBarEdit = ({...props}) => {
 
 
     if (!fontsLoaded) {
-        return <AppLoading/>;
+        return false;
     } else {
         return (
             <>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         elevation: 5,
-        backgroundColor: theme.colors.white,
+        backgroundColor: 'transparent',
         height: 40,
         alignItems: "center",
         justifyContent: 'space-between',
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         height: 40,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: 'black'
+        backgroundColor: 'transparent',
     },
     textStyle: {
         fontSize: 14,

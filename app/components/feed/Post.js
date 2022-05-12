@@ -13,6 +13,7 @@ import {Poppins_300Light, Poppins_400Regular, Poppins_500Medium, Poppins_600Semi
 import AppLoading from "expo-app-loading";
 import {useNavigation} from "@react-navigation/native";
 import {SharedElement} from "react-navigation-shared-element";
+import AnimatedSplash from "react-native-animated-splash-screen";
 
 const POST_ACTION_ICONS_SIZE = 28;
 const LIKE_ANIMATION_ICON_SIZE = width / 4;
@@ -76,7 +77,14 @@ export const Post = forwardRef((props, parentRef ) => {
 
 
     if (!fontsLoaded) {
-        return <AppLoading />;
+        return <AnimatedSplash
+            translucent={true}
+            isLoaded={true}
+            logoImage={require("../../assets/images/logo.png")}
+            backgroundColor={"#262626"}
+            logoHeight={500}
+            logoWidth={300}
+        />;
     } else {
         return (
             <View style={styles.container}>

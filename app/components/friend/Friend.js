@@ -10,6 +10,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
 import {useTranslation} from "react-i18next";
 import {useNavigation} from "@react-navigation/native";
+import AnimatedSplash from "react-native-animated-splash-screen";
 
 
 const Friend = ({...props}) => {
@@ -37,7 +38,14 @@ const Friend = ({...props}) => {
     }
 
     if (!fontsLoaded) {
-        return <AppLoading />;
+        return <AnimatedSplash
+            translucent={true}
+            isLoaded={true}
+            logoImage={require("../../assets/images/logo.png")}
+            backgroundColor={"#262626"}
+            logoHeight={500}
+            logoWidth={300}
+        />;
     } else {
         return (
             <View

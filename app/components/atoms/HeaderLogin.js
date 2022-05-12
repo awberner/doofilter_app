@@ -7,6 +7,7 @@ import {
     Poppins_700Bold,
 } from '@expo-google-fonts/poppins'
 import AppLoading from "expo-app-loading";
+import AnimatedSplash from "react-native-animated-splash-screen";
 
 export default function HeaderLogin(props) {
 
@@ -15,7 +16,14 @@ export default function HeaderLogin(props) {
     });
 
     if (!fontsLoaded) {
-        return <AppLoading />;
+        return <AnimatedSplash
+            translucent={true}
+            isLoaded={true}
+            logoImage={require("../../assets/images/logo.png")}
+            backgroundColor={"#262626"}
+            logoHeight={500}
+            logoWidth={300}
+        />;
     } else {
         return <Text style={styles.header} {...props} />
     }

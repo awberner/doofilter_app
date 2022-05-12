@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {SafeAreaView, ImageBackground, StyleSheet, Dimensions, View, Text, Image, TouchableOpacity, Linking} from "react-native";
 import Modal from "react-native-modal";
 import { Button } from 'react-native-paper';
@@ -11,8 +11,9 @@ import {
     Poppins_600SemiBold, Poppins_700Bold,
     useFonts
 } from "@expo-google-fonts/poppins";
-import {MEDIA_SERVER_MEDIA} from '@env';
+import {MEDIA_SERVER_MEDIA, MEDIA_SERVER_DOODIVE_DEFAULT} from '@env';
 import {useNavigation} from "@react-navigation/native";
+import store from "../../redux/store";
 
 const { width, height } = Dimensions.get("window");
 
@@ -30,10 +31,19 @@ const Drawer = ({isDrawerOpen, setIsDrawerOpen}) => {
     const lang = useTranslation()[1].language;
 
     const {signOut} = useContext(AuthContext);
-    const [firstname, setFirstname] = useState('John');
-    const [lastname, setLastname] = useState('Doo');
-    const [coverA, setCoverA] = useState(MEDIA_SERVER_MEDIA + '765921458491362114adc3fdcc');
-    const [avatar, setAvatar] = useState(MEDIA_SERVER_MEDIA + '4863256794238627773e7305eb');
+    const [firstname, setFirstname] = useState(false);
+    const [lastname, setLastname] = useState(false);
+    const [coverA, setCoverA] = useState(false);
+    const [avatar, setAvatar] = useState(false);
+
+    useEffect(async () => {
+        let defaultAvatar = MEDIA_SERVER_DOODIVE_DEFAULT + 'default-avatar.png';
+        let defaultCover = MEDIA_SERVER_DOODIVE_DEFAULT + 'default-background.png';
+        store.getState().currentUser.firstname ? setFirstname(store.getState().currentUser.firstname) : setFirstname(false);
+        store.getState().currentUser.lastname ? setLastname(store.getState().currentUser.lastname) : setLastname(false);
+        store.getState().currentUser.coverA ? setCoverA(store.getState().currentUser.coverA) : setCoverA(defaultCover);
+        store.getState().currentUser.avatar ? setAvatar(store.getState().currentUser.avatar) : setAvatar(defaultAvatar);
+    }, []);
 
     const translateTo = (lang) => {
         i18n.changeLanguage(lang).then(() => {

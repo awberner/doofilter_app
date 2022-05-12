@@ -38,7 +38,7 @@ export default function AuthNavigator() {
             await SecureStore.setItemAsync('alreadyLaunched', 'true');
             setIsFirstLaunch(true);
         } else {
-            setIsFirstLaunch(true);
+            setIsFirstLaunch(false); // set to true to see in dev
         }
     }, []);
 

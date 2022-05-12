@@ -30,6 +30,7 @@ import Modal from "react-native-modalbox";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 import { ActivityIndicator } from 'react-native-paper';
+import AnimatedSplash from "react-native-animated-splash-screen";
 
 
 const PostsCommentModal = ({reference, open, isOpenModal, setModalVisible, post}) => {
@@ -111,7 +112,14 @@ const PostsCommentModal = ({reference, open, isOpenModal, setModalVisible, post}
 
 
     if (!fontsLoaded) {
-        return <AppLoading />;
+        return <AnimatedSplash
+            translucent={true}
+            isLoaded={true}
+            logoImage={require("../../assets/images/logo.png")}
+            backgroundColor={"#262626"}
+            logoHeight={500}
+            logoWidth={300}
+        />;
     } else {
         return (
 

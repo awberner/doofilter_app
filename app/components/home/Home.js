@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {StyleSheet, ScrollView, View, Text, ImageBackground, TouchableOpacity, Dimensions, Linking} from 'react-native';
 import {theme} from "../../core/theme";
 import store from "../../redux/store";
@@ -7,10 +7,9 @@ import { FontAwesome } from 'react-native-vector-icons';
 import {Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, useFonts} from "@expo-google-fonts/poppins";
 const { width, height } = Dimensions.get("window");
 import {useTranslation} from "react-i18next";
-import AppLoading from "expo-app-loading";
 import CustomDrawer from "../drawer/Drawer";
+import AuthContext from "../../../AuthContext";
 const WIDTH = width;
-const HEIGHT = height;
 
 
 export default function Home({navigation}) {
@@ -23,87 +22,107 @@ export default function Home({navigation}) {
     });
 
     const {t} = useTranslation();
-    const [firstname, setFirstname] = useState('John');
-    const [lastname, setLastname] = useState('Doo');
-    const [coverA, setCoverA] = useState(MEDIA_SERVER_MEDIA + '765921458491362114adc3fdcc');
-    const [coverB1, setCoverB1] = useState(MEDIA_SERVER_MEDIA + '4863256794238626a4824ba2e2');
-    const [coverB2, setCoverB2] = useState(MEDIA_SERVER_MEDIA + '4863256794238626a4824ba2e2');
-    const [avatar, setAvatar] = useState(MEDIA_SERVER_MEDIA + '4863256794238627773e7305eb');
+    const {signOut} = useContext(AuthContext);
+    const [firstname, setFirstname] = useState(false);
+    const [lastname, setLastname] = useState(false);
+    const [coverA, setCoverA] = useState(MEDIA_SERVER_MEDIA + false);
+    const [coverB1, setCoverB1] = useState(false);
+    const [coverB2, setCoverB2] = useState(false);
+    const [avatar, setAvatar] = useState(false);
+    const [loaded, setLoaded] = useState(false);
     const [autologLink, setAutologLink] = useState('link');
 
-    useEffect(() => {
-        console.log(store.getState());
-        console.log(MEDIA_SERVER_MEDIA);
+    useEffect(async () => {
+        setLoaded(true);
     }, []);
 
+    useEffect(async () => {
+        let defaultAvatar = MEDIA_SERVER_DOODIVE_DEFAULT + 'default-avatar.png';
+        let defaultCover = MEDIA_SERVER_DOODIVE_DEFAULT + 'default-background.png';
+
+        //let user = store.dispatch(getCurrentUser());
+        console.log(store.getState());
+
+        if(await store.getState().currentUser) {
+            store.getState().currentUser.firstname ? setFirstname(store.getState().currentUser.firstname) : setFirstname(false);
+            store.getState().currentUser.lastname ? setLastname(store.getState().currentUser.lastname) : setLastname(false);
+            store.getState().currentUser.coverA ? setCoverA(store.getState().currentUser.coverA) : setCoverA(defaultCover);
+            store.getState().currentUser.coverB1 ? setCoverB1(store.getState().currentUser.coverB1) : setCoverB1(defaultCover);
+            store.getState().currentUser.coverB2 ? setCoverB2(store.getState().currentUser.coverB2) : setCoverB2(defaultCover);
+            store.getState().currentUser.avatar ? setAvatar(store.getState().currentUser.avatar) : setAvatar(defaultAvatar);
+        } else {
+            signOut();
+        }
+    }, [loaded]);
+
     if (!fontsLoaded) {
-        return <AppLoading/>;
+        return false;
     } else {
         return (
-<>
-            <CustomDrawer />
-            <ScrollView style={styles.container}>
-                <View style={styles.cover}>
-                    <View style={styles.coverA}>
-                        <ImageBackground
-                            source={{uri: coverA}}
-                            resizeMode="cover"
-                            style={styles.coverA1}
-                        />
+            <>
+                <CustomDrawer />
+                <ScrollView style={styles.container}>
+                    <View style={styles.cover}>
+                        <View style={styles.coverA}>
+                            <ImageBackground
+                                source={{uri: coverA}}
+                                resizeMode="cover"
+                                style={styles.coverA1}
+                            />
+                        </View>
+
+                        <View style={styles.coverB}>
+                            <ImageBackground
+                                source={{uri: coverB1}}
+                                resizeMode="cover"
+                                style={styles.coverB1}
+                            />
+                            <ImageBackground
+                                source={{uri: coverB2}}
+                                resizeMode="cover"
+                                style={styles.coverB2}
+                            />
+                        </View>
+
+                        <View style={styles.avatar}>
+                            <ImageBackground
+                                source={{uri: avatar}}
+                                resizeMode="cover"
+                                style={styles.backgroundAvatar}
+                            />
+                        </View>
                     </View>
 
-                    <View style={styles.coverB}>
-                        <ImageBackground
-                            source={{uri: coverB1}}
-                            resizeMode="cover"
-                            style={styles.coverB1}
-                        />
-                        <ImageBackground
-                            source={{uri: coverB2}}
-                            resizeMode="cover"
-                            style={styles.coverB2}
-                        />
-                    </View>
+                    {
+                        firstname || lastname ?
+                            <View style={styles.currentUser}>
+                                <Text style={styles.currentUserName}>{firstname} {lastname}</Text>
+                            </View> : false
+                    }
 
-                    <View style={styles.avatar}>
-                        <ImageBackground
-                            source={{uri: avatar}}
-                            resizeMode="cover"
-                            style={styles.backgroundAvatar}
-                        />
-                    </View>
-                </View>
+                    {
+                        autologLink ?
+                            <TouchableOpacity style={styles.buttonEdit} onPress={() => {
+                                Linking.openURL(autologLink)
+                            }}>
+                                <Text style={styles.buttonEditText}>{t("EDIT_ON_DOODIVE")}</Text>
+                                <FontAwesome style={styles.buttonEditIcon} name="pencil" size={24}
+                                             color={theme.colors.white}/>
+                            </TouchableOpacity> : false
+                    }
 
-                {
-                    firstname || lastname ?
-                        <View style={styles.currentUser}>
-                            <Text style={styles.currentUserName}>{firstname} {lastname}</Text>
-                        </View> : false
-                }
-
-                {
-                    autologLink ?
-                        <TouchableOpacity style={styles.buttonEdit} onPress={() => {
-                            Linking.openURL(autologLink)
-                        }}>
-                            <Text style={styles.buttonEditText}>{t("EDIT_ON_DOODIVE")}</Text>
-                            <FontAwesome style={styles.buttonEditIcon} name="pencil" size={24}
-                                         color={theme.colors.white}/>
-                        </TouchableOpacity> : false
-                }
-
-                <View style={styles.appInfoContainer}>
-                    <View style={styles.appInfo}>
-                        <Text style={styles.appInfoTextTitle}>50</Text>
-                        <Text style={styles.appInfoText}>Images Doofiltrer</Text>
+                    <View style={styles.appInfoContainer}>
+                        <View style={styles.appInfo}>
+                            <Text style={styles.appInfoTextTitle}>50</Text>
+                            <Text style={styles.appInfoText}>Images Doofiltrer</Text>
+                        </View>
+                        <View style={styles.appInfo}>
+                            <Text style={styles.appInfoTextTitle}>40</Text>
+                            <Text style={styles.appInfoText}>Images Doofiltrer</Text>
+                        </View>
                     </View>
-                    <View style={styles.appInfo}>
-                        <Text style={styles.appInfoTextTitle}>40</Text>
-                        <Text style={styles.appInfoText}>Images Doofiltrer</Text>
-                    </View>
-                </View>
-            </ScrollView>
-</>
+                </ScrollView>
+            </>
         );
     }
 }
@@ -162,13 +181,17 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         backgroundColor: 'black',
         alignSelf: "center",
+        alignItems: 'center',
+        justifyContent: 'center',
         position: "absolute",
         zIndex: 1,
         top: (WIDTH - 28) * 0.16,
     },
     backgroundAvatar: {
         width: '100%',
-        paddingBottom: 170
+        paddingBottom: 170,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     currentUser: {
         paddingVertical: 16,

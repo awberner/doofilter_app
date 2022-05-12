@@ -1,6 +1,6 @@
 export const ADD_CURRENT_USER = "addCurrentUser";
 export const REMOVE_CURRENT_USER = "removeCurrentUser";
-
+export const GET_CURRENT_USER = "getCurrentUser";
 
 export function addCurrentUser(data) {
     return {
@@ -13,10 +13,16 @@ export function addCurrentUser(data) {
             lastname: data.lastname,
             gender: data.gender,
             avatar: data.avatar,
-            cover: data.cover,
+            coverA: data.cover,
+            coverB1: data.coverB1,
+            coverB2: data.coverB2,
         }};
 }
 
-export function removeCurrentUser(data) {
+export function removeCurrentUser() {
     return { type: this.REMOVE_CURRENT_USER }
+}
+
+export function getCurrentUser() {
+    return { type: this.GET_CURRENT_USER }
 }

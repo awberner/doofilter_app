@@ -9,6 +9,7 @@ import * as Animatable from 'react-native-animatable';
 import LogoAnimated from "../components/atoms/LogoAnimated";
 import GlobalStyles from "../core/globalStyles";
 import BackgroundVideo from "../components/backgrounds/BackgroundVideo";
+import {StatusBar} from "expo-status-bar";
 
 
 export default function StartScreen({navigation}) {
@@ -17,6 +18,7 @@ export default function StartScreen({navigation}) {
 
     return (
         <BackgroundVideo>
+            <StatusBar style="light" />
             <SafeAreaView style={[styles.container, GlobalStyles.droidSafeArea]}>
                 <LogoAnimated />
                 <Animatable.View animation="fadeInUpBig" style={styles.content}>

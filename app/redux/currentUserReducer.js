@@ -11,10 +11,14 @@ export default function currentUser( state = [], action ) {
                 lastname: action.data.lastname,
                 gender: action.data.gender,
                 avatar: action.data.avatar,
-                cover: action.data.cover,
+                coverA: action.data.coverA,
+                coverB1: action.data.coverB1,
+                coverB2: action.data.coverB2,
             };
         case actions.REMOVE_CURRENT_USER:
             return [];
+        case actions.GET_CURRENT_USER:
+            return state;
         default:
             return state;
     }

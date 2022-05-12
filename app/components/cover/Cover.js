@@ -4,6 +4,7 @@ import {StyleSheet, View, Image, Text} from "react-native";
 import {useFonts, Poppins_500Medium, Poppins_700Bold} from '@expo-google-fonts/poppins'
 import {useEffect, useState} from "react";
 import AppLoading from "expo-app-loading";
+import AnimatedSplash from "react-native-animated-splash-screen";
 
 
 const Cover = ({user}) => {
@@ -35,7 +36,14 @@ const Cover = ({user}) => {
     });
 
     if (!fontsLoaded) {
-        return <AppLoading />;
+        return <AnimatedSplash
+            translucent={true}
+            isLoaded={true}
+            logoImage={require("../../assets/images/logo.png")}
+            backgroundColor={"#262626"}
+            logoHeight={500}
+            logoWidth={300}
+        />;
     } else {
         return (
             <View>

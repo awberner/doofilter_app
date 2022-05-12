@@ -1,7 +1,6 @@
 import { Video } from "expo-av";
 import React, { useMemo } from "react";
 import { Animated, StyleSheet, KeyboardAvoidingView, View } from "react-native";
-import {StatusBar} from "expo-status-bar";
 
 export default function BackgroundVideo({ children }) {
 
@@ -10,7 +9,6 @@ export default function BackgroundVideo({ children }) {
     return (
         <View style={styles.container}>
             <View style={styles.background}>
-                <StatusBar style="light" />
                 <Animated.View
                     style={[styles.backgroundViewWrapper, { opacity: opacity }]}
                 >

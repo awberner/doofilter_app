@@ -9,6 +9,7 @@ import {
     Poppins_400Regular_Italic,
 } from "@expo-google-fonts/poppins";
 import AppLoading from "expo-app-loading";
+import AnimatedSplash from "react-native-animated-splash-screen";
 
 export default function TextInputComponent({ errorText, description, ...props }) {
 
@@ -18,7 +19,14 @@ export default function TextInputComponent({ errorText, description, ...props })
     });
 
     if (!fontsLoaded) {
-        return <AppLoading />;
+        return <AnimatedSplash
+            translucent={true}
+            isLoaded={true}
+            logoImage={require("../../assets/images/logo.png")}
+            backgroundColor={"#262626"}
+            logoHeight={500}
+            logoWidth={300}
+        />;
     } else {
         return (
             <View style={styles.container}>
@@ -57,6 +65,7 @@ const styles = StyleSheet.create({
     error: {
         fontSize: 15,
         color: theme.colors.error,
+        fontFamily: 'Poppins_600SemiBold',
         paddingTop: 8,
     },
 })

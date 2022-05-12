@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StatusBar} from "expo-status-bar";
 import {SafeAreaView, Dimensions, StyleSheet, View, TouchableOpacity} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,19 +10,26 @@ import AppBarLogo from "./Logo";
 import Entypo from "react-native-vector-icons/Entypo";
 import {useNavigation} from "@react-navigation/native";
 import Drawer from "../drawer/Drawer";
+import {MaterialCommunityIcons} from "react-native-vector-icons";
+import {checkConnectivity} from "../functions/functions";
 
-const AppBar = ({goBack}) => {
+const AppBar = ({goBack, ...props}) => {
 
     const navigation = useNavigation();
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [isConnected, setIsConnected] = useState(true);
+
+    useEffect(() => {
+        checkConnectivity().then((isConnected) => {
+            setIsConnected(isConnected);
+        });
+    }, [props, navigation]);
 
     return (
-
         <LinearGradient
             colors={['rgba(0,0,0,0.8)', 'transparent']}
             style={styles.appbar}>
-            <StatusBar style="light" />
-            <SafeAreaView style={GlobalStyles.droidSafeArea}>
+            <SafeAreaView style={[styles.container, GlobalStyles.droidSafeArea]}>
                 <View style={styles.headerContainer}>
                     <View style={styles.leftContainer}>
                         { goBack ? <AppBarBackButton/> : false }
@@ -30,11 +37,14 @@ const AppBar = ({goBack}) => {
                             <AppBarLogo/>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.rightContainer} onPress={() => setIsDrawerOpen(!isDrawerOpen)}>
-                        <View style={styles.menuBtn}>
-                            <Entypo onPress={() => setIsDrawerOpen(!isDrawerOpen)} name="menu" size={30} color={theme.colors.white}/>
-                        </View>
-                    </TouchableOpacity>
+                    <View style={styles.rightContainer}>
+                        {
+                            !isConnected ?
+                                <MaterialCommunityIcons style={{marginRight: 6}} name="wifi-off" size={23} color={theme.colors.error}/> : false
+                        }
+                        <Entypo onPress={() => setIsDrawerOpen(!isDrawerOpen)} name="menu" size={30}
+                                color={theme.colors.white}/>
+                    </View>
                 </View>
             </SafeAreaView>
 
@@ -60,6 +70,10 @@ const styles = StyleSheet.create({
         },
         width: width,
     },
+    container: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
     headerContainer: {
         top: 0,
         marginBottom: 4,
@@ -69,18 +83,13 @@ const styles = StyleSheet.create({
     leftContainer: {
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "center"
+        flex: 1
     },
     rightContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
         marginLeft: 'auto',
-        marginRight: 12,
-        width: 40,
-        height: 40,
-    },
-    menuBtn: {
-        width: 40,
-        height: 40,
-        alignItems: "center",
-        justifyContent: "center",
+        marginRight: 12
     },
 });

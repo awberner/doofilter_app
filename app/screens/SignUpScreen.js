@@ -28,9 +28,9 @@ export default function SignUpScreen({ navigation }) {
 
     const onSignUpPressed = () => {
         let firstnameError = '';
-        if (!firstname.value) firstnameError = t("NAME_CANT_EMPTY")
+        if (!firstname.value) firstnameError = t("FIRSTNAME_CANT_EMPTY")
         let lastnameError = '';
-        if (!lastname.value) lastnameError = t("NAME_CANT_EMPTY")
+        if (!lastname.value) lastnameError = t("LASTNAME_CANT_EMPTY")
 
         let emailError = '';
         if (!email.value) emailError = t("EMAIL_CANT_EMPTY")
