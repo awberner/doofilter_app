@@ -12,6 +12,8 @@ import AppNavigator from "./app/navigations/app-navigator";
 import {signIn} from "./app/services/Members";
 import store from "./app/redux/store";
 import {addCurrentUser} from "./app/redux/actions";
+import HomeScreen from "./app/screens/HomeScreen";
+import {Dimensions, View, Text, Image} from 'react-native';
 
 Navigation.registerComponent('StartScreen', () => gestureHandlerRootHOC(App));
 
@@ -64,7 +66,7 @@ export default function App() {
                 dispatch({ type: 'SIGN_OUT'});
             }
 
-            
+
             // After restoring token, we may need to validate it in production apps
 
             // This will switch to the App screen or Auth screen and this loading
@@ -132,6 +134,7 @@ export default function App() {
             logoWidth={300}
         />;
     }
+
 
     return (
         <NavigationContainer>

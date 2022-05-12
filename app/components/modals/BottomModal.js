@@ -57,7 +57,10 @@ export default function BottomModal({isOpenModal, setModalVisible}) {
                     </Animatable.View>*/}
 
                     <Animatable.View style={styles.menuItem} animation="fadeIn" delay={200}>
-                        <TouchableOpacity style={styles.buttonContainer} onPress={() => addImage(navigation)} >
+                        <TouchableOpacity style={styles.buttonContainer} onPress={() => {
+                            setModalVisible(false);
+                            addImage(navigation);
+                        }} >
                             <View style={styles.IconContainer}>
                                 <Feather style={styles.buttonIcon} name="camera" size={30} color={theme.colors.primary}/>
                             </View>
@@ -69,7 +72,10 @@ export default function BottomModal({isOpenModal, setModalVisible}) {
                     </Animatable.View>
 
                     <Animatable.View style={styles.menuItem} animation="fadeIn" delay={300}>
-                        <TouchableOpacity style={styles.buttonContainer}>
+                        <TouchableOpacity style={styles.buttonContainer} onPress={() => {
+                            setModalVisible(false);
+                            addImage(navigation);
+                        }} >
                             <View style={styles.IconContainer}>
                                 <Feather style={styles.buttonIcon} name="video" size={30} color={theme.colors.primary}/>
                             </View>
@@ -112,10 +118,11 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 0,
         width: width,
-        height: height * 0.35,
+        height: height * 0.38,
         alignItems: "center",
         paddingBottom: 40,
-        borderRadius: 20,
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
         paddingHorizontal: 0,
         backgroundColor: theme.colors.white,
     },

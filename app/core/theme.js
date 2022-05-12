@@ -18,11 +18,13 @@ export const theme = {
         black: '#333333',
         black20: 'rgba(0, 0, 0, 0.2)',
         black40: 'rgba(0, 0, 0, 0.4)',
+        black50: 'rgba(0, 0, 0, 0.5)',
         black60: 'rgba(0, 0, 0, 0.6)',
         black80: 'rgba(0, 0, 0, 0.8)',
         gray: '#b3b3b3',
         mediumgray: '#b3b3b3',
         lightgray: '#cfd1d4',
+        lightgray3: '#b4b7bc',
         lightgray0: '#f0f2f5',
     },
 }

@@ -2,7 +2,6 @@ import {LinearGradient} from "expo-linear-gradient";
 import {Dimensions, SafeAreaView, StyleSheet} from "react-native";
 import GlobalStyles from "../../core/globalStyles";
 import React from "react";
-import AppBarLogo from "./Logo";
 import AppBarBackButton from "./BackButton";
 const width = Dimensions.get('window').width;
 
@@ -15,7 +14,6 @@ const AppBarEdit = ({goBack}) => {
             style={styles.appbar}>
             <SafeAreaView style={[styles.container,GlobalStyles.droidSafeArea]}>
                 { goBack ? <AppBarBackButton/> : false }
-                {/*<AppBarLogo />*/}
             </SafeAreaView>
         </LinearGradient>
     )
@@ -27,9 +25,8 @@ export default AppBarEdit;
 
 const styles = StyleSheet.create({
     appbar: {
-        /*position: "absolute",*/
         width: width,
-        height: 100,
+        paddingBottom: 10,
         zIndex: 5
     },
     container: {

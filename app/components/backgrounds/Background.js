@@ -27,8 +27,7 @@ export default function Background({ children , ...props}) {
             break;
         case 'black':
             return (
-                <View
-                    style={{...styles.background, backgroundColor: '#000'}}>
+                <View style={{...styles.background}}>
                     <KeyboardAvoidingView style={styles.container} behavior="padding">
                         {children}
                     </KeyboardAvoidingView>

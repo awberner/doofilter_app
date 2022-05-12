@@ -35,5 +35,19 @@ const en = {
   "NO_COMMENT_BE_FIRST": "No comment.\nBe the first to leave a comment!",
   "COMMENTS_COUNT": "{{count}} comments",
   "ADD_COMMENT": "Add a comment ...",
+  "DOOFILTER": "Doofilter",
+  "TOOLS": "Tools",
+  "EXPORT": "Export",
+  "EDIT_ON_DOODIVE": "Edit your profile on Doodive",
+  "SIGN_OUT": "Sign out",
+  "LANGUAGES_SELECTION": {
+    "EN": "English (English)",
+    "FR": "Français (French)",
+    "DE": "Deutsch (German)",
+    "ES": "Español (Spanish)"
+  },
+  "HELP_SUPPORT" : "Help & Support",
+  "TERMS_AND_CONDITIONS": "Terms and Conditions",
+
 }
 export default en;

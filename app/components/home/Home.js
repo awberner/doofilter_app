@@ -1,113 +1,183 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, ImageBackground, TouchableOpacity} from 'react-native';
-import Background from "../../components/backgrounds/Background";
-import AppBar from "../../components/appBars/AppBar";
-import TabBar from "../../components/tabBar/TabBar";
-import BottomModal from "../../components/modals/BottomModal";
+import {StyleSheet, ScrollView, View, Text, ImageBackground, TouchableOpacity, Dimensions, Linking} from 'react-native';
 import {theme} from "../../core/theme";
-import {ProgressiveImage} from "../feed/ProgressiveImage";
 import store from "../../redux/store";
 import {MEDIA_SERVER_MEDIA, MEDIA_SERVER_DOODIVE_DEFAULT} from '@env';
-import { FontAwesome5 } from 'react-native-vector-icons';
+import { FontAwesome } from 'react-native-vector-icons';
+import {Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, useFonts} from "@expo-google-fonts/poppins";
+const { width, height } = Dimensions.get("window");
+import {useTranslation} from "react-i18next";
+import AppLoading from "expo-app-loading";
+import CustomDrawer from "../drawer/Drawer";
+const WIDTH = width;
+const HEIGHT = height;
 
 
 export default function Home({navigation}) {
+
+    let [fontsLoaded] = useFonts({
+        Poppins_400Regular,
+        Poppins_500Medium,
+        Poppins_600SemiBold,
+        Poppins_700Bold,
+    });
+
+    const {t} = useTranslation();
+    const [firstname, setFirstname] = useState('John');
+    const [lastname, setLastname] = useState('Doo');
+    const [coverA, setCoverA] = useState(MEDIA_SERVER_MEDIA + '765921458491362114adc3fdcc');
+    const [coverB1, setCoverB1] = useState(MEDIA_SERVER_MEDIA + '4863256794238626a4824ba2e2');
+    const [coverB2, setCoverB2] = useState(MEDIA_SERVER_MEDIA + '4863256794238626a4824ba2e2');
+    const [avatar, setAvatar] = useState(MEDIA_SERVER_MEDIA + '4863256794238627773e7305eb');
+    const [autologLink, setAutologLink] = useState('link');
 
     useEffect(() => {
         console.log(store.getState());
         console.log(MEDIA_SERVER_MEDIA);
     }, []);
 
+    if (!fontsLoaded) {
+        return <AppLoading/>;
+    } else {
+        return (
+<>
+            <CustomDrawer />
+            <ScrollView style={styles.container}>
+                <View style={styles.cover}>
+                    <View style={styles.coverA}>
+                        <ImageBackground
+                            source={{uri: coverA}}
+                            resizeMode="cover"
+                            style={styles.coverA1}
+                        />
+                    </View>
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.cover}>
-                <View style={styles.coverA}>
-                    <ImageBackground
-                        source={{uri: MEDIA_SERVER_MEDIA + '4863256794238626a4824ba2e2'}}
-                        resizeMode="cover"
-                        style={styles.backgroundCoverA}
-                    />
-                </View>
-                <View style={styles.avatar}>
-                    <ImageBackground
-                        source={{uri: MEDIA_SERVER_MEDIA + '4863256794238627773e7305eb'}}
-                        resizeMode="cover"
-                        style={styles.backgroundAvatar}
-                    />
-                </View>
-                <View style={styles.currentUser}>
-                    <Text style={styles.currentUserName}>John Doo</Text>
-                </View>
-            </View>
-            <View style={styles.appInfoContainer}>
-                <View style={styles.appInfo}>
-                    <Text style={styles.appInfoTextTitle}>50</Text>
-                    <Text style={styles.appInfoText}>Images Doofiltrer</Text>
-                </View>
-                <View style={styles.appInfo}>
-                    <Text style={styles.appInfoTextTitle}>40</Text>
-                    <Text style={styles.appInfoText}>Images Doofiltrer</Text>
-                </View>
-            </View>
-            <TouchableOpacity style={styles.buttonEdit}>
-                <Text style={styles.buttonEditText}>
-                    Editer votre profil sur Doodive
-                </Text>
+                    <View style={styles.coverB}>
+                        <ImageBackground
+                            source={{uri: coverB1}}
+                            resizeMode="cover"
+                            style={styles.coverB1}
+                        />
+                        <ImageBackground
+                            source={{uri: coverB2}}
+                            resizeMode="cover"
+                            style={styles.coverB2}
+                        />
+                    </View>
 
-                <FontAwesome5 style={styles.buttonEditIcon} name="pencil-alt"
-                              size={18} />
+                    <View style={styles.avatar}>
+                        <ImageBackground
+                            source={{uri: avatar}}
+                            resizeMode="cover"
+                            style={styles.backgroundAvatar}
+                        />
+                    </View>
+                </View>
 
-            </TouchableOpacity>
-        </View>
-    );
+                {
+                    firstname || lastname ?
+                        <View style={styles.currentUser}>
+                            <Text style={styles.currentUserName}>{firstname} {lastname}</Text>
+                        </View> : false
+                }
+
+                {
+                    autologLink ?
+                        <TouchableOpacity style={styles.buttonEdit} onPress={() => {
+                            Linking.openURL(autologLink)
+                        }}>
+                            <Text style={styles.buttonEditText}>{t("EDIT_ON_DOODIVE")}</Text>
+                            <FontAwesome style={styles.buttonEditIcon} name="pencil" size={24}
+                                         color={theme.colors.white}/>
+                        </TouchableOpacity> : false
+                }
+
+                <View style={styles.appInfoContainer}>
+                    <View style={styles.appInfo}>
+                        <Text style={styles.appInfoTextTitle}>50</Text>
+                        <Text style={styles.appInfoText}>Images Doofiltrer</Text>
+                    </View>
+                    <View style={styles.appInfo}>
+                        <Text style={styles.appInfoTextTitle}>40</Text>
+                        <Text style={styles.appInfoText}>Images Doofiltrer</Text>
+                    </View>
+                </View>
+            </ScrollView>
+</>
+        );
+    }
 }
 
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 14,
+        paddingTop: 0,
+        paddingBottom: 14,
+        paddingHorizontal: 14,
     },
     cover: {
-        width: '100%',
-        height: 320,
-        marginTop: -10
+        width: WIDTH - 28,
+        padding: 0,
     },
     coverA: {
+        height: (WIDTH - 28) * 0.4,
         position: 'relative',
         borderRadius: 7,
+        marginBottom: 2,
         overflow: 'hidden'
     },
-    backgroundCoverA: {
-        width: '100%',
-        paddingBottom: 170
+    coverA1: {
+        flex: 1
+    },
+    coverB: {
+        height: (WIDTH - 28) * 0.4,
+        position: 'relative',
+        borderRadius: 7,
+        overflow: 'hidden',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        marginTop: 2,
+    },
+    coverB1: {
+        flex: 1,
+        position: 'relative',
+        borderRadius: 7,
+        overflow: 'hidden',
+        marginRight: 2
+    },
+    coverB2: {
+        flex: 1,
+        position: 'relative',
+        borderRadius: 7,
+        overflow: 'hidden',
+        marginLeft: 2,
     },
     avatar: {
-        position: 'relative',
-        width: 150,
-        height: 150,
+        width: 162,
+        height: 162,
         borderRadius: 100,
         overflow: 'hidden',
         borderWidth: 4,
-        borderColor: theme.colors.white,
+        borderColor: 'black',
+        backgroundColor: 'black',
         alignSelf: "center",
         position: "absolute",
         zIndex: 1,
-        top: 100
+        top: (WIDTH - 28) * 0.16,
     },
     backgroundAvatar: {
         width: '100%',
         paddingBottom: 170
     },
     currentUser: {
-        top: 80,
-        paddingTop: 14,
+        paddingVertical: 16,
     },
     currentUserName: {
         textAlign: 'center',
         fontSize: 26,
         fontWeight: '600',
+        fontFamily: 'Poppins_600SemiBold',
         color: theme.colors.white
     },
     appInfoContainer: {
@@ -115,7 +185,8 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: 30
     },
     appInfo: {
         width: '49%',
@@ -140,11 +211,10 @@ const styles = StyleSheet.create({
         color: theme.colors.white
     },
     buttonEdit: {
-        marginTop: 10,
         marginBottom: 10,
         padding: 15,
-        borderRadius: 4,
-        backgroundColor: theme.colors.lightgray,
+        borderRadius: 7,
+        backgroundColor: theme.colors.primary,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center"
@@ -153,7 +223,9 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '600',
         lineHeight: 20,
-        marginRight: 6
+        marginRight: 10,
+        color: theme.colors.white,
+        fontFamily: 'Poppins_600SemiBold',
     },
     buttonEditIcon: {
         top: -1

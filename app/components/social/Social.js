@@ -1,14 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {FlatList, TouchableHighlight, StyleSheet, View, Text, Dimensions, TouchableOpacity, Linking} from 'react-native';
-import Background from "../../components/backgrounds/Background";
-import AppBar from "../../components/appBars/AppBar";
-import TabBar from "../../components/tabBar/TabBar";
-import BottomModal from "../../components/modals/BottomModal";
+import React from 'react';
+import {StyleSheet, View, Text, Dimensions, TouchableOpacity, Linking} from 'react-native';
 import {theme} from "../../core/theme";
-import {ProgressiveImage} from "../feed/ProgressiveImage";
-import store from "../../redux/store";
-import {MEDIA_SERVER_MEDIA, MEDIA_SERVER_DOODIVE_DEFAULT} from '@env';
-import { FontAwesome, FontAwesome5, Entypo, Feather } from 'react-native-vector-icons';
+import { FontAwesome, Feather, FontAwesome5 } from 'react-native-vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { addImage } from '../functions/functions';
 import { useNavigation } from '@react-navigation/native';
@@ -17,7 +10,7 @@ const { width, height } = Dimensions.get("window");
 
 const GRID_PADDING = 6;
 const BORDER_RADIUS = 60;
-const LOGO_SIZE = 34;
+const LOGO_SIZE = 26;
 const IMAGE_SIZE = (width - 28 - GRID_PADDING * 2) / 4;
 
 export default function Social() {
@@ -29,11 +22,11 @@ export default function Social() {
             'link': 'https://www.facebook.com/Doodive/',
             'icon': 'facebookIcon'
         },
-        {
+        /*{
             'name': 'TikTok',
             'link': 'https://www.tiktok.com/@doodive',
             'icon': 'tiktokIcon'
-        },
+        },*/
         {
             'name': 'Instagram',
             'link': 'https://www.instagram.com/doodive_official/',
@@ -49,6 +42,7 @@ export default function Social() {
 
     return (
         <View style={styles.container}>
+
             <Text style={styles.title}>Doodive{'\u00AE'}</Text>
             <View style={styles.actionContent}>
                 <TouchableOpacity onPress={() => addImage(navigation)} style={styles.actionItemContainer}>
@@ -66,12 +60,13 @@ export default function Social() {
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
+
             <Text style={styles.title}>Follow us</Text>
             <View style={styles.content}>
                 {
                     socialMedia.map((item, index) => {
                         return (
-                            <TouchableOpacity style={styles.grid} onPress={ ()=>{ Linking.openURL(item.link)}}>
+                            <TouchableOpacity key={index} style={styles.grid} onPress={ ()=>{ Linking.openURL(item.link)}}>
                                 <View style={styles.gridItem}>
                                     <Text style={styles.gridText}><SocialMediaIcon social={item.icon} /></Text>
                                 </View>
@@ -88,13 +83,13 @@ export default function Social() {
 function SocialMediaIcon(props) {
     let social = props.social;
     if (social === 'facebookIcon') {
-        return (<FontAwesome name="facebook-square" size={LOGO_SIZE} color={theme.colors.white}/>);
+        return (<FontAwesome5 brand name={'facebook-square'} size={LOGO_SIZE} color={theme.colors.white}/>);
     } else if (social === 'tiktokIcon') {
-        return (<FontAwesome name="facebook-square" size={LOGO_SIZE} color={theme.colors.white}/>);
+        return (<FontAwesome5 brand name={'tiktok'} size={LOGO_SIZE} color={theme.colors.white}/>);
     } else if (social === 'instagramIcon') {
-        return (<FontAwesome name="instagram" size={LOGO_SIZE} color={theme.colors.white}/>);
+        return (<FontAwesome5 brand name={'instagram'} size={LOGO_SIZE} color={theme.colors.white}/>);
     } else if (social === 'youtubeIcon') {
-        return (<FontAwesome name="youtube" size={LOGO_SIZE} color={theme.colors.white}/>);
+        return (<FontAwesome5 brand name={'youtube'} size={LOGO_SIZE} color={theme.colors.white}/>);
     } else {
         return '';
     }
@@ -192,6 +187,8 @@ const styles = StyleSheet.create({
         width: IMAGE_SIZE,
         borderRadius: BORDER_RADIUS,
         padding: GRID_PADDING,
+        maxWidth: 78,
+        maxHeight: 78
     },
     gridItem: {
         height: '100%',

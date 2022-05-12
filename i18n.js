@@ -33,7 +33,7 @@ i18n
     .use(initReactI18next)
     .init({
         compatibilityJSON: 'v3',
-        whitelist: ['en', 'fr', 'de'],
+        whitelist: ['en', 'fr', 'de', 'es'],
         resources,
         //language to use if translations in user language are not available
         fallbackLng: "en",
