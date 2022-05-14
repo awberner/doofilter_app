@@ -4,7 +4,6 @@ import Dialog from "react-native-dialog";
 const { width } = Dimensions.get("screen");
 import {MEDIA_SERVER_MEDIA} from '@env';
 import {Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, useFonts} from "@expo-google-fonts/poppins";
-import AppLoading from "expo-app-loading";
 import {theme} from "../../core/theme";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";

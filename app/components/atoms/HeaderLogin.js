@@ -6,7 +6,6 @@ import {
     useFonts,
     Poppins_700Bold,
 } from '@expo-google-fonts/poppins'
-import AppLoading from "expo-app-loading";
 import AnimatedSplash from "react-native-animated-splash-screen";
 
 export default function HeaderLogin(props) {

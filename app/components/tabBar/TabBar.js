@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, TouchableOpacity, View, Image, Text} from 'react-native';
-import { SimpleLineIcons, Entypo, Feather, Fontisto } from 'react-native-vector-icons';
+import {StyleSheet, TouchableOpacity, View, Text} from 'react-native';
+import { Entypo, Feather, Fontisto } from 'react-native-vector-icons';
 import {theme} from "../../core/theme";
 import {LinearGradient} from "expo-linear-gradient";
 import {Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, useFonts} from "@expo-google-fonts/poppins";
-import AppLoading from "expo-app-loading";
 import {useTranslation} from "react-i18next";
 import {useNavigation} from "@react-navigation/native";
 import BottomModal from "../modals/BottomModal";
@@ -37,7 +36,7 @@ const TabBar = ({...props}) => {
 
 
     if (!fontsLoaded) {
-        return <AppLoading/>;
+        return false;
     } else {
         return (
             <>

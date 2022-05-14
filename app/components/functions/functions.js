@@ -25,9 +25,9 @@ export function checkConnectivity() {
 /* ADD IMAGE                                                          */
 /* ================================================================== */
 
-export async function addImage2(navigation) {
+export async function addImage(navigation , toBase64 = false) {
     let _image = await ImagePicker.launchImageLibraryAsync({
-        base64: true,
+        base64: toBase64,
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: false,
         quality: 1,
@@ -40,7 +40,7 @@ export async function addImage2(navigation) {
     }
 }
 
-export async function addImage(navigation) {
+export async function addImage2(navigation) {
     let _image = await ImagePicker.launchImageLibraryAsync({
         base64: true,
         mediaTypes: ImagePicker.MediaTypeOptions.Images,

@@ -10,7 +10,6 @@ import {theme} from "../../core/theme";
 const { width, height } = Dimensions.get("window");
 import {MEDIA_SERVER_MEDIA, MEDIA_SERVER_DOODIVE_DEFAULT} from '@env';
 import {Poppins_300Light, Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, useFonts} from "@expo-google-fonts/poppins";
-import AppLoading from "expo-app-loading";
 import {useNavigation} from "@react-navigation/native";
 import {SharedElement} from "react-navigation-shared-element";
 import AnimatedSplash from "react-native-animated-splash-screen";

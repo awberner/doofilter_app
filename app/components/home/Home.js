@@ -1,18 +1,18 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {StyleSheet, ScrollView, View, Text, ImageBackground, TouchableOpacity, Dimensions, Linking} from 'react-native';
-import {theme} from "../../core/theme";
-import store from "../../redux/store";
+import {Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, useFonts} from "@expo-google-fonts/poppins";
 import {MEDIA_SERVER_MEDIA, MEDIA_SERVER_DOODIVE_DEFAULT} from '@env';
 import { FontAwesome } from 'react-native-vector-icons';
-import {Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, useFonts} from "@expo-google-fonts/poppins";
-const { width, height } = Dimensions.get("window");
 import {useTranslation} from "react-i18next";
 import CustomDrawer from "../drawer/Drawer";
 import AuthContext from "../../../AuthContext";
+import {theme} from "../../core/theme";
+import store from "../../redux/store";
+const { width, height } = Dimensions.get("window");
 const WIDTH = width;
 
 
-export default function Home({navigation}) {
+export default function Home({}) {
 
     let [fontsLoaded] = useFonts({
         Poppins_400Regular,
@@ -36,14 +36,10 @@ export default function Home({navigation}) {
         setLoaded(true);
     }, []);
 
-    useEffect(async () => {
+    async function loadUser() {
         let defaultAvatar = MEDIA_SERVER_DOODIVE_DEFAULT + 'default-avatar.png';
         let defaultCover = MEDIA_SERVER_DOODIVE_DEFAULT + 'default-background.png';
-
-        //let user = store.dispatch(getCurrentUser());
-        console.log(store.getState());
-
-        if(await store.getState().currentUser) {
+        if (await store.getState().currentUser) {
             store.getState().currentUser.firstname ? setFirstname(store.getState().currentUser.firstname) : setFirstname(false);
             store.getState().currentUser.lastname ? setLastname(store.getState().currentUser.lastname) : setLastname(false);
             store.getState().currentUser.coverA ? setCoverA(store.getState().currentUser.coverA) : setCoverA(defaultCover);
@@ -53,6 +49,10 @@ export default function Home({navigation}) {
         } else {
             signOut();
         }
+    }
+
+    useEffect(async () => {
+        loaded ? await loadUser() : false;
     }, [loaded]);
 
     if (!fontsLoaded) {

@@ -49,6 +49,7 @@ const fr = {
   },
   "HELP_SUPPORT" : "Aide et support",
   "TERMS_AND_CONDITIONS" : "Termes et conditions",
-
+  "VERSION": "Version",
+  "MADE_IN_SWITZERLAND": "Developpé en Suisse",
 }
 export default fr;

@@ -8,7 +8,6 @@ import {
     Poppins_400Regular,
     Poppins_400Regular_Italic,
 } from "@expo-google-fonts/poppins";
-import AppLoading from "expo-app-loading";
 import AnimatedSplash from "react-native-animated-splash-screen";
 
 export default function TextInputComponent({ errorText, description, ...props }) {

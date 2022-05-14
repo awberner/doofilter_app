@@ -6,7 +6,6 @@ import {
     useFonts,
     Poppins_700Bold
 } from "@expo-google-fonts/poppins";
-import AppLoading from "expo-app-loading";
 
 
 export default function Button({ mode, style, ...props }) {

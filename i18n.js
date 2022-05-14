@@ -5,6 +5,7 @@ import { initReactI18next } from "react-i18next";
 import en from "./app/assets/locales/en";
 import fr from "./app/assets/locales/fr";
 import de from "./app/assets/locales/de";
+import es from "./app/assets/locales/es";
 
 const resources = {
     fr: {
@@ -15,6 +16,9 @@ const resources = {
     },
     de: {
         translation: de,
+    },
+    es: {
+        translation: es,
     }
 };
 

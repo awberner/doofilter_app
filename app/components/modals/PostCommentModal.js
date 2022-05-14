@@ -1,9 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
-import AppLoading from "expo-app-loading";
 import {
     StyleSheet,
     Dimensions,
-    Platform,
     ScrollView,
     KeyboardAvoidingView,
     TouchableOpacity,

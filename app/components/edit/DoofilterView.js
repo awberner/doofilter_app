@@ -6,23 +6,40 @@ import {theme} from "../../core/theme";
 
 const WIDTH = Dimensions.get('window').width;
 
+
 export default function DoofilterView ({activeSection, imageUploaded, ...props}) {
 
-    //console.log(props.route.params.image)
 
     return (
         <View style={[activeSection === 'doofilter' ? {...styles.showSection, ...styles.sectionDoofilter} : styles.section]}>
-            <ReactNativeZoomableView
-                maxZoom={30}
-                minZoom={1}
-                bindToBorders={true}
-            >
-                <Image
-                    source={{uri: imageUploaded}}
-                    style={{flex: 1}}
-                    resizeMode="contain"
+            {/*
+                <ReactNativeZoomableView
+                    maxZoom={30}
+                    minZoom={1}
+                    bindToBorders={true}
+                >
+                    <Image
+                        source={{uri: imageUploaded}}
+                        style={{flex: 1}}
+                        resizeMode="contain"
+                    />
+                </ReactNativeZoomableView>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <GLView style={{ width: 300, height: 300 }} onContextCreate={onContextCreate} />
+                </View>
+
+                <GLView
+                    style={{ flex: 1 }}
+                    onContextCreate={async context => {
+                        const app = new PIXI.Application({ context });
+                        const sprite = await PIXI.Sprite.fromExpoAsync(
+                            'http://i.imgur.com/uwrbErh.png',
+                        );
+                        app.stage.addChild(sprite);
+                    }}
                 />
-            </ReactNativeZoomableView>
+            */}
+
             <View style={styles.sliderContainer}>
                 <Slider
                     style={styles.slider}

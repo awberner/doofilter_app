@@ -3,7 +3,6 @@ import {theme} from "../../core/theme";
 import {StyleSheet, View, Image, Text} from "react-native";
 import {useFonts, Poppins_500Medium, Poppins_700Bold} from '@expo-google-fonts/poppins'
 import {useEffect, useState} from "react";
-import AppLoading from "expo-app-loading";
 import AnimatedSplash from "react-native-animated-splash-screen";
 
 
