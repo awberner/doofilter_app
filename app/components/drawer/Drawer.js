@@ -1,18 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {SafeAreaView, ImageBackground, StyleSheet, Dimensions, View, Text, Image, TouchableOpacity, Linking} from "react-native";
-import Modal from "react-native-modal";
-import { Button } from 'react-native-paper';
+import {Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, useFonts} from "@expo-google-fonts/poppins";
+import {useNavigation} from "@react-navigation/native";
+import {MEDIA_SERVER_DOODIVE_DEFAULT} from '@env';
 import AuthContext from "../../../AuthContext";
 import {useTranslation} from "react-i18next";
+import { Button } from 'react-native-paper';
+import Modal from "react-native-modal";
 import {theme} from "../../core/theme";
-import {
-    Poppins_400Regular,
-    Poppins_500Medium,
-    Poppins_600SemiBold, Poppins_700Bold,
-    useFonts
-} from "@expo-google-fonts/poppins";
-import {MEDIA_SERVER_MEDIA, MEDIA_SERVER_DOODIVE_DEFAULT} from '@env';
-import {useNavigation} from "@react-navigation/native";
+import {expo} from '../../../app.json';
 import store from "../../redux/store";
 
 const { width, height } = Dimensions.get("window");
@@ -57,104 +53,109 @@ const Drawer = ({isDrawerOpen, setIsDrawerOpen}) => {
     }
 
 
-    return (
-        <Modal
-            isVisible={isDrawerOpen}
-            onBackdropPress={() => setIsDrawerOpen(false)} // Android back press
-            onSwipeComplete={() => setIsDrawerOpen(false)} // Swipe to discard
-            animationIn="slideInLeft" // Has others, we want slide in from the left
-            animationOut="slideOutLeft" // When discarding the drawer
-            swipeDirection="left" // Discard the drawer with swipe to left
-            useNativeDriver // Faster animation
-            hideModalContentWhileAnimating // Better performance, try with/without
-            propagateSwipe // Allows swipe events to propagate to children components (eg a ScrollView inside a modal)
-            style={styles.sideMenuStyle} // Needs to contain the width, 75% of screen width in our case
-        >
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <ImageBackground
-                        source={{uri: coverA}}
-                        resizeMode="cover"
-                        style={styles.headerBackground}
-                    >
-                        <View style={styles.headerOverlay}>
-                            <View style={styles.headerBottom}>
-                                <ImageBackground
-                                    source={{uri: avatar}}
-                                    resizeMode="cover"
-                                    style={styles.avatar}
-                                />
-                                <Text style={styles.userName}>{firstname} {lastname}</Text>
+    if(!fontsLoaded) {
+        return false;
+    } else {
+        return (
+            <Modal
+                isVisible={isDrawerOpen}
+                onBackdropPress={() => setIsDrawerOpen(false)} // Android back press
+                onSwipeComplete={() => setIsDrawerOpen(false)} // Swipe to discard
+                animationIn="slideInLeft" // Has others, we want slide in from the left
+                animationOut="slideOutLeft" // When discarding the drawer
+                swipeDirection="left" // Discard the drawer with swipe to left
+                useNativeDriver // Faster animation
+                hideModalContentWhileAnimating // Better performance, try with/without
+                propagateSwipe // Allows swipe events to propagate to children components (eg a ScrollView inside a modal)
+                style={styles.sideMenuStyle} // Needs to contain the width, 75% of screen width in our case
+            >
+                <View style={styles.container}>
+                    <View style={styles.header}>
+                        <ImageBackground
+                            source={{uri: coverA}}
+                            resizeMode="cover"
+                            style={styles.headerBackground}
+                        >
+                            <View style={styles.headerOverlay}>
+                                <View style={styles.headerBottom}>
+                                    <ImageBackground
+                                        source={{uri: avatar}}
+                                        resizeMode="cover"
+                                        style={styles.avatar}
+                                    />
+                                    <Text style={styles.userName}>{firstname} {lastname}</Text>
+                                </View>
                             </View>
+                        </ImageBackground>
+                    </View>
+
+                    <View style={styles.content}>
+                        <View style={styles.translateContainer}>
+                            <Button
+                                style={styles.translateItem}
+                                mode="contained"
+                                color={lang === 'en' ? theme.colors.primary : theme.colors.lightgray}
+                                compact={true}
+                                onPress={() => translateTo('en')}>
+                                <Text style={styles.translateItemText}>EN</Text>
+                            </Button>
+                            <Button
+                                style={styles.translateItem}
+                                mode="contained"
+                                color={lang === 'fr' ? theme.colors.primary : theme.colors.lightgray}
+                                compact={true}
+                                onPress={() => translateTo('fr')}>
+                                <Text style={styles.translateItemText}>FR</Text>
+                            </Button>
+                            <Button
+                                style={styles.translateItem}
+                                mode="contained"
+                                color={lang === 'de' ? theme.colors.primary : theme.colors.lightgray}
+                                compact={true}
+                                onPress={() => translateTo('de')}>
+                                <Text style={styles.translateItemText}>DE</Text>
+                            </Button>
+                            <Button
+                                style={styles.translateItem}
+                                mode="contained"
+                                color={lang === 'es' ? theme.colors.primary : theme.colors.lightgray}
+                                compact={true}
+                                onPress={() => translateTo('es')}>
+                                <Text style={styles.translateItemText}>ES</Text>
+                            </Button>
                         </View>
-                    </ImageBackground>
-                </View>
 
-                <View style={styles.content}>
-                    <View style={styles.translateContainer}>
-                        <Button
-                            style={styles.translateItem}
-                            mode="contained"
-                            color={lang === 'en' ? theme.colors.primary : theme.colors.lightgray}
-                            compact={true}
-                            onPress={() => translateTo('en')}>
-                            <Text style={styles.translateItemText}>EN</Text>
-                        </Button>
-                        <Button
-                            style={styles.translateItem}
-                            mode="contained"
-                            color={lang === 'fr' ? theme.colors.primary : theme.colors.lightgray}
-                            compact={true}
-                            onPress={() => translateTo('fr')}>
-                            <Text style={styles.translateItemText}>FR</Text>
-                        </Button>
-                        <Button
-                            style={styles.translateItem}
-                            mode="contained"
-                            color={lang === 'de' ? theme.colors.primary : theme.colors.lightgray}
-                            compact={true}
-                            onPress={() => translateTo('de')}>
-                            <Text style={styles.translateItemText}>DE</Text>
-                        </Button>
-                        <Button
-                            style={styles.translateItem}
-                            mode="contained"
-                            color={lang === 'es' ? theme.colors.primary : theme.colors.lightgray}
-                            compact={true}
-                            onPress={() => translateTo('es')}>
-                            <Text style={styles.translateItemText}>ES</Text>
-                        </Button>
+                        <View style={styles.linksContainer}>
+                            <TouchableOpacity
+                                style={styles.linkButton}
+                                mode="Text"
+                                color={theme.colors.primary}
+                                compact={false}
+                                onPress={() => handleLink('HomeScreen')}>
+                                <Text style={styles.linkButtonText}>{t("HOME")}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.linkButton}
+                                mode="Text"
+                                color={theme.colors.primary}
+                                compact={false}
+                                onPress={() => handleLink('SocialScreen')}>
+                                <Text style={styles.linkButtonText}>{t("DOODIVE")}</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.linkButton}
+                                mode="Text"
+                                color={theme.colors.primary}
+                                compact={false}
+                                onPress={() => {
+                                    Linking.openURL('https://doodive.com/terms?lang=' + lang)
+                                }}>
+                                <Text style={styles.linkButtonText}>{t("TERMS_AND_CONDITIONS")}</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
 
-                    <View style={styles.linksContainer}>
-                        <TouchableOpacity
-                            style={styles.linkButton}
-                            mode="Text"
-                            color={theme.colors.primary}
-                            compact={false}
-                            onPress={() => handleLink('HomeScreen')}>
-                            <Text style={styles.linkButtonText}>{t("HOME")}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.linkButton}
-                            mode="Text"
-                            color={theme.colors.primary}
-                            compact={false}
-                            onPress={() => handleLink('SocialScreen')}>
-                            <Text style={styles.linkButtonText}>{t("DOODIVE")}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.linkButton}
-                            mode="Text"
-                            color={theme.colors.primary}
-                            compact={false}
-                            onPress={ ()=>{ Linking.openURL('https://doodive.com/terms?lang='+lang)} }>
-                            <Text style={styles.linkButtonText}>{t("TERMS_AND_CONDITIONS")}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-                <View style={styles.footer}>
+                    <View style={styles.footer}>
                         <Button
                             style={styles.signOut}
                             icon="power"
@@ -165,14 +166,15 @@ const Drawer = ({isDrawerOpen, setIsDrawerOpen}) => {
                             <Text style={styles.signOutText}>{t("SIGN_OUT")}</Text>
                         </Button>
 
-                        <Text style={styles.credits}>version 1.2.4</Text>
-                        <Text style={styles.credits}>Made in Switzerland</Text>
+                        <Text style={styles.credits}>{t("VERSION")} {expo.version}</Text>
+                        <Text style={styles.credits}>{t("MADE_IN_SWITZERLAND")}</Text>
                         <Image style={styles.flag} source={require('../../assets/images/swiss_flag.jpeg')}/>
+                    </View>
+                    <SafeAreaView/>
                 </View>
-                <SafeAreaView />
-            </View>
-        </Modal>
-    );
+            </Modal>
+        );
+    }
 };
 
 export default Drawer;

@@ -1,12 +1,13 @@
 import * as SecureStore from "expo-secure-store";
-import axios from "axios";
 import {API_URL, API_TOKEN} from '@env';
+import axios from "axios";
 
 
 
 /* ================================================================== */
 /* LOGIN                                                              */
 /* ================================================================== */
+
 export const signIn = (email, password) => new Promise(async (resolve) => {
     const req = {
         email: email,
@@ -33,9 +34,11 @@ export const signIn = (email, password) => new Promise(async (resolve) => {
 });
 
 
+
 /* ================================================================== */
 /* REFRESH USER INFO                                                  */
 /* ================================================================== */
+
 export const refreshCurrentUser = (uid, token) => new Promise(async (resolve) => {
     const req = {
         uid: uid,
@@ -66,6 +69,7 @@ export const refreshCurrentUser = (uid, token) => new Promise(async (resolve) =>
 /* ================================================================== */
 /* GET CURRENT USER                                                   */
 /* ================================================================== */
+
 export const getUser = (user) => new Promise(async (resolve) => {
     const data = {
         'av': '67227389439586200dc50d4bcf',

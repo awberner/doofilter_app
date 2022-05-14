@@ -1,5 +1,3 @@
-import * as SecureStore from "expo-secure-store";
-import axios from "axios";
 
 export const getPosts = (offset, limit) => new Promise(async (resolve) => {
         const posts = {

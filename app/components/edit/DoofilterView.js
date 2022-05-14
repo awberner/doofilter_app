@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from "react";
-import {Dimensions, View, StyleSheet, Image} from 'react-native';
+import React from "react";
+import { Dimensions, View, StyleSheet, Image } from 'react-native';
 import Slider from '@react-native-community/slider';
 import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
-import {theme} from "../../core/theme";
+import { theme } from "../../core/theme";
 
 const WIDTH = Dimensions.get('window').width;
 

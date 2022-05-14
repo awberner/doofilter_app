@@ -1,14 +1,14 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {StyleSheet, ScrollView, View, Text, ImageBackground, TouchableOpacity, Dimensions, Linking} from 'react-native';
-import {Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, useFonts} from "@expo-google-fonts/poppins";
+import React, { useState, useEffect, useContext } from 'react';
+import { StyleSheet, ScrollView, View, Text, ImageBackground, TouchableOpacity, Dimensions, Linking } from 'react-native';
+import { Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, useFonts } from "@expo-google-fonts/poppins";
 import {MEDIA_SERVER_MEDIA, MEDIA_SERVER_DOODIVE_DEFAULT} from '@env';
 import { FontAwesome } from 'react-native-vector-icons';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import CustomDrawer from "../drawer/Drawer";
 import AuthContext from "../../../AuthContext";
-import {theme} from "../../core/theme";
+import { theme } from "../../core/theme";
 import store from "../../redux/store";
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 const WIDTH = width;
 
 
@@ -32,10 +32,6 @@ export default function Home({}) {
     const [loaded, setLoaded] = useState(false);
     const [autologLink, setAutologLink] = useState('link');
 
-    useEffect(async () => {
-        setLoaded(true);
-    }, []);
-
     async function loadUser() {
         let defaultAvatar = MEDIA_SERVER_DOODIVE_DEFAULT + 'default-avatar.png';
         let defaultCover = MEDIA_SERVER_DOODIVE_DEFAULT + 'default-background.png';
@@ -50,6 +46,10 @@ export default function Home({}) {
             signOut();
         }
     }
+
+    useEffect(async () => {
+        setLoaded(true);
+    }, []);
 
     useEffect(async () => {
         loaded ? await loadUser() : false;
@@ -67,29 +67,25 @@ export default function Home({}) {
                             <ImageBackground
                                 source={{uri: coverA}}
                                 resizeMode="cover"
-                                style={styles.coverA1}
-                            />
+                                style={styles.coverA1} />
                         </View>
 
                         <View style={styles.coverB}>
                             <ImageBackground
                                 source={{uri: coverB1}}
                                 resizeMode="cover"
-                                style={styles.coverB1}
-                            />
+                                style={styles.coverB1} />
                             <ImageBackground
                                 source={{uri: coverB2}}
                                 resizeMode="cover"
-                                style={styles.coverB2}
-                            />
+                                style={styles.coverB2} />
                         </View>
 
                         <View style={styles.avatar}>
                             <ImageBackground
                                 source={{uri: avatar}}
                                 resizeMode="cover"
-                                style={styles.backgroundAvatar}
-                            />
+                                style={styles.backgroundAvatar} />
                         </View>
                     </View>
 
