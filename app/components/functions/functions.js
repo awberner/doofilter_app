@@ -34,6 +34,7 @@ export async function addImage(navigation , toBase64 = false) {
     //console.log(JSON.stringify(_image));
 
     if (!_image.cancelled && _image.uri) {
-        navigation.navigate('EditImageScreen', {image: _image.uri});
+        navigation.navigate('EditImageScreen', {image: _image});
     }
 }
+

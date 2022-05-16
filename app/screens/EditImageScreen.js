@@ -6,11 +6,12 @@ import TabBarEdit from "../components/edit/TabBarEdit";
 import DoofilterView from "../components/edit/DoofilterView";
 import ToolsView from "../components/edit/ToolsView";
 import ExportView from "../components/edit/ExportView";
+import PreviewView from "../components/edit/PreviewView";
 
 export default function EditImageScreen (props) {
 
     const [imageUploaded, setImageUploaded] = useState(null);
-    const [activeSection, setActiveSection] = useState('doofilter');
+    const [activeSection, setActiveSection] = useState('preview');
     const [toolsModalVisible, setToolsModalVisible] = useState(false);
 
     useEffect(() => {
@@ -34,21 +35,27 @@ export default function EditImageScreen (props) {
     return (
         <Background page={'black'}>
 
-            <AppBarEdit goBack/>
+            <PreviewView activeSection={activeSection}
+                         setToolsModalVisible ={setToolsModalVisible}
+                         imageUploaded={imageUploaded} />
 
-            <SafeAreaView style={styles.safeArea}>
+            <DoofilterView activeSection={activeSection} imageUploaded={imageUploaded}
+                           handleActiveSection={handleActiveSection}/>
 
-                <DoofilterView activeSection={activeSection} imageUploaded={imageUploaded} />
+            <ToolsView activeSection={activeSection}
+                       imageUploaded={imageUploaded}
+                       toolsModalVisible ={toolsModalVisible}
+                       handleActiveSection={handleActiveSection}
+                       setToolsModalVisible ={setToolsModalVisible}/>
 
-                <ToolsView activeSection={activeSection} imageUploaded={imageUploaded}
-                           toolsModalVisible ={toolsModalVisible}
-                           setToolsModalVisible ={setToolsModalVisible}/>
+            <ExportView activeSection={activeSection}
+                        handleActiveSection={handleActiveSection}
+                        imageUploaded={imageUploaded} />
 
-                <ExportView activeSection={activeSection} imageUploaded={imageUploaded} />
-
-                <TabBarEdit activeSection={activeSection} handleActiveSection={handleActiveSection}/>
-
-            </SafeAreaView>
+            {
+                activeSection === 'preview' ?
+                    <TabBarEdit activeSection={activeSection} handleActiveSection={handleActiveSection}/> : false
+            }
 
         </Background>
     );
@@ -57,9 +64,3 @@ export default function EditImageScreen (props) {
 
 
 
-
-const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-    },
-});

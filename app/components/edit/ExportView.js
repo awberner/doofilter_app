@@ -1,17 +1,25 @@
 import React from "react";
 import {View, StyleSheet, Image} from 'react-native';
+import AppBarEdit from "../appBars/AppBarEdit";
 
-export default function ExportView ({imageUploaded, activeSection, ...props}) {
+export default function ExportView ({imageUploaded, activeSection, handleActiveSection, ...props}) {
 
-    return (
-        <View style={[activeSection === 'export' ? {...styles.showSection, ...styles.sectionExport} : styles.section]}>
-            <Image
-                source={{uri: imageUploaded}}
-                style={{flex: 1}}
-                resizeMode="contain"
-            />
-        </View>
-    );
+    if(!imageUploaded) {
+        return false;
+    } else {
+        return (
+            <View style={[activeSection === 'export' ? {...styles.showSection, ...styles.sectionExport} : styles.section]}>
+
+                <AppBarEdit reset={() => handleActiveSection('preview')}/>
+
+                <Image
+                    source={{uri: imageUploaded.uri}}
+                    style={{flex: 1}}
+                    resizeMode="contain"
+                />
+            </View>
+        );
+    }
 
 };
 

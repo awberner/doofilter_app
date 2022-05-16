@@ -28,7 +28,7 @@ const BORDER_RADIUS = 6;
 const COLUMN_COUNT = 3;
 const TOOL_SIZE = (WIDTH - TOOL_PADDING * 2 - LIST_PADDING * 2) / COLUMN_COUNT;
 
-export default function ToolsModal({isOpenModal, setModalVisible}) {
+export default function ToolsModal({isOpenModal, setModalVisible, activeTool, setActiveTool}) {
 
     let [fontsLoaded] = useFonts({
         Poppins_400Regular,
@@ -54,6 +54,14 @@ export default function ToolsModal({isOpenModal, setModalVisible}) {
         }
     ]
 
+    const handleToolChange = (evt, tool) => {
+        evt.preventDefault();
+        evt.stopPropagation();
+        setActiveTool(tool);
+        setModalVisible(false);
+    }
+
+
     return (
         <Modal entry={"bottom"} isOpen={isOpenModal} style={styles.modalBox} onClosed={() => setModalVisible(false)}>
 
@@ -69,12 +77,12 @@ export default function ToolsModal({isOpenModal, setModalVisible}) {
                     {
                         ToolsList.map((tool, index) => {
                             return (
-                                <TouchableHighlight key={index}>
-                                    <View style={styles.toolItem}>
+                                <TouchableHighlight key={index} onPress={(e) => handleToolChange(e, tool.tool)}>
+                                    <View style={activeTool === tool.tool ? styles.toolItemActive : styles.toolItem}>
                                         <View style={styles.toolItemIcon}>
-                                            <MaterialIcons name={tool.icon} size={44} color={theme.colors.primary}/>
+                                            <MaterialIcons name={tool.icon} size={44} color={activeTool === tool.tool ? theme.colors.white : theme.colors.primary}/>
                                         </View>
-                                        <Text style={styles.toolItemText}>{tool.tool}</Text>
+                                        <Text style={activeTool === tool.tool ? styles.toolItemTextActive : styles.toolItemText}>{tool.tool}</Text>
                                     </View>
                                 </TouchableHighlight>
                             )
@@ -140,6 +148,15 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         justifyContent: 'space-between'
     },
+    toolItemActive : {
+        height: TOOL_SIZE,
+        width: TOOL_SIZE,
+        borderRadius: BORDER_RADIUS,
+        padding: TOOL_PADDING,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: theme.colors.primaryHover
+    },
     toolItem : {
         height: TOOL_SIZE,
         width: TOOL_SIZE,
@@ -163,4 +180,15 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins_500Medium',
         color: theme.colors.primary
     },
+    toolItemTextActive : {
+        fontSize: 14,
+        borderRadius: BORDER_RADIUS,
+        overflow: 'hidden',
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily: 'Poppins_500Medium',
+        color: theme.colors.white
+    },
 });
+

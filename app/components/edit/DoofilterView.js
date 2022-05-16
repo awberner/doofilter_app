@@ -1,17 +1,46 @@
-import React from "react";
+import React, {useEffect, useState, useRef} from "react";
 import { Dimensions, View, StyleSheet, Image } from 'react-native';
 import Slider from '@react-native-community/slider';
 import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
 import { theme } from "../../core/theme";
+import Canvas, {Image as CanvasImage} from 'react-native-canvas';
+import AppBarEdit from "../appBars/AppBarEdit";
 
 const WIDTH = Dimensions.get('window').width;
 
 
-export default function DoofilterView ({activeSection, imageUploaded, ...props}) {
+export default function DoofilterView ({activeSection, handleActiveSection, imageUploaded, ...props}) {
+
+    const [canvasContainerInfo, setCanvasContainerInfo] = useState(false);
+    const CanvasRef = useRef(null);
+
+    function find_dimesions(layout){
+        const {x, y, width, height} = layout;
+        setCanvasContainerInfo(layout);
+    }
+
+    const handleCanvas = (canvas) => {
+        /*if(canvas) {
+            const image = new CanvasImage(canvas);
+            const ctx = canvas.getContext('2d');
+
+            image.src = imageUploaded.uri;
+            canvas.width = 80;
+            canvas.height = 80;
+
+            image.addEventListener('load', () => {
+                debugger
+                console.log('image is loaded');
+                ctx.drawImage(image, 0, 0);
+            });
+        }*/
+    }
 
 
     return (
         <View style={[activeSection === 'doofilter' ? {...styles.showSection, ...styles.sectionDoofilter} : styles.section]}>
+
+            <AppBarEdit reset={() => handleActiveSection('preview')}/>
             {/*
                 <ReactNativeZoomableView
                     maxZoom={30}
@@ -19,7 +48,7 @@ export default function DoofilterView ({activeSection, imageUploaded, ...props})
                     bindToBorders={true}
                 >
                     <Image
-                        source={{uri: imageUploaded}}
+                        source={{uri: imageUploaded.uri}}
                         style={{flex: 1}}
                         resizeMode="contain"
                     />
@@ -40,6 +69,11 @@ export default function DoofilterView ({activeSection, imageUploaded, ...props})
                 />
             */}
 
+            <View style={{flex:1, backgroundColor: 'green'}} onLayout={(e) => { find_dimesions(e.nativeEvent.layout) }}>
+                <Canvas style={{width:'100%', height: '100%', backgroundColor: 'yellow'}}
+                        ref={handleCanvas}/>
+            </View>
+
             <View style={styles.sliderContainer}>
                 <Slider
                     style={styles.slider}
@@ -51,6 +85,7 @@ export default function DoofilterView ({activeSection, imageUploaded, ...props})
                     maximumTrackTintColor={theme.colors.primary}
                 />
             </View>
+
         </View>
     );
 
@@ -91,3 +126,4 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
 });
+

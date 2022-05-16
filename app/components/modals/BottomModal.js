@@ -59,7 +59,7 @@ export default function BottomModal({isOpenModal, setModalVisible}) {
                     <Animatable.View style={styles.menuItem} animation="fadeIn" delay={200}>
                         <TouchableOpacity style={styles.buttonContainer} onPress={() => {
                             setModalVisible(false);
-                            addImage(navigation);
+                            addImage(navigation, true);
                         }} >
                             <View style={styles.IconContainer}>
                                 <Feather style={styles.buttonIcon} name="camera" size={30} color={theme.colors.primary}/>
@@ -74,7 +74,7 @@ export default function BottomModal({isOpenModal, setModalVisible}) {
                     <Animatable.View style={styles.menuItem} animation="fadeIn" delay={300}>
                         <TouchableOpacity style={styles.buttonContainer} onPress={() => {
                             setModalVisible(false);
-                            addImage(navigation);
+                            addImage(navigation, true);
                         }} >
                             <View style={styles.IconContainer}>
                                 <Feather style={styles.buttonIcon} name="video" size={30} color={theme.colors.primary}/>
@@ -180,3 +180,4 @@ const styles = StyleSheet.create({
         elevation: 6,
     },
 });
+
